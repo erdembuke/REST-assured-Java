@@ -1,3 +1,5 @@
+package com.otelrezervasyonu;
+
 import io.cucumber.cienvironment.internal.com.eclipsesource.json.JsonObject;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
