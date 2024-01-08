@@ -10,25 +10,6 @@ import static io.restassured.RestAssured.*;
 
 public class UpdateBookingTests extends BaseTest {
 
-    // Creating token because api call needs it on header as a Cookie
-    public String createToken() {
-        JsonObject body = new JsonObject();
-        body.add("username", "admin");
-        body.add("password", "password123");
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-
-                .when()
-                .body(body.toString()) // json object i ekledik
-                .log().all()
-                .post("https://restful-booker.herokuapp.com/auth");
-
-        response.prettyPrint();
-
-        return response.jsonPath().getJsonObject("token"); // token degerini string cinsinden donecek
-    }
-
     @Test
     public void updateBookingTest() {
         // Creating token because api call needs it on the header as a Cookie

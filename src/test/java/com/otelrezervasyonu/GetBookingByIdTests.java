@@ -29,6 +29,7 @@ public class GetBookingByIdTests extends BaseTest{
 
         response.prettyPrint(); // response details
 
+        // Degiskenlere atamadan direkt response.jsonPath()getJsonObject(...) diye de daha sade yazabiliriz
         String firstname = response.jsonPath().getJsonObject("firstname"); // firstname yi aldik
         String lastname = response.jsonPath().getJsonObject("lastname"); // lastname yi aldik
         int totalPrice = response.jsonPath().getJsonObject("totalprice"); // price yi aldik

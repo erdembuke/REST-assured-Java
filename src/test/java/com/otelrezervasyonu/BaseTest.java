@@ -8,6 +8,24 @@ import static io.restassured.RestAssured.given;
 
 public class BaseTest {
 
+    protected Response createBooking() {
+        Response response = given()
+
+                .when()
+                .contentType(ContentType.JSON) // api call needs to add contentype as a header, in documentation it says
+                .body(bookingObject("Erdem","Buke",100,true)) // BaseTest classda olusturdugumuz json object i method ile cagirdik
+                .post("https://restful-booker.herokuapp.com/booking");
+
+        response.prettyPrint(); // seeing response as output in console
+
+        // Status code assertion, (then part)
+        response.then()
+                .statusCode(200);
+
+        return response;
+
+    }
+
     // body kismi string kabul ettigi icin method donus tipi string olacak
     // rezervasyon degerlerinin dinamik olabilmesi icin, olusturulurken degistirilebilmesi icin parametreler verildi
     protected String bookingObject(String firstname, String lastname, int totalPrice, boolean depositPaid) {
@@ -27,21 +45,21 @@ public class BaseTest {
         return body.toString();
     }
 
-    protected Response createBooking() {
+    protected String createToken() {
+        JsonObject body = new JsonObject();
+        body.add("username", "admin");
+        body.add("password", "password123");
+
         Response response = given()
+                .contentType(ContentType.JSON)
 
                 .when()
-                .contentType(ContentType.JSON) // api call needs to add contentype as a header, in documentation it says
-                .body(bookingObject("Erdem","Buke",100,true)) // BaseTest classda olusturdugumuz json object i method ile cagirdik
-                .post("https://restful-booker.herokuapp.com/booking");
+                .body(body.toString()) // json object i ekledik
+                .log().all()
+                .post("https://restful-booker.herokuapp.com/auth");
 
-        response.prettyPrint(); // seeing response as output in console
+        response.prettyPrint();
 
-        // Status code assertion, (then part)
-        response.then()
-                .statusCode(200);
-
-        return response;
-
+        return response.jsonPath().getJsonObject("token"); // token degerini string cinsinden donecek
     }
 }
