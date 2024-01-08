@@ -9,11 +9,12 @@ import static io.restassured.RestAssured.given;
 public class BaseTest {
 
     // body kismi string kabul ettigi icin method donus tipi string olacak
-    protected String bookingObject() {
+    // rezervasyon degerlerinin dinamik olabilmesi icin, olusturulurken degistirilebilmesi icin parametreler verildi
+    protected String bookingObject(String firstname, String lastname, int totalPrice) {
         JsonObject body = new JsonObject();
-        body.add("firstname", "Erdem");
-        body.add("lastname", "Buke");
-        body.add("totalprice", 100);
+        body.add("firstname", firstname);
+        body.add("lastname", lastname);
+        body.add("totalprice", totalPrice);
         body.add("depositpaid", true);
 
         JsonObject bookingDates = new JsonObject(); // bookingdates kendi basina bir obje oldugu icin ayri obje olusturduk
@@ -31,7 +32,7 @@ public class BaseTest {
 
                 .when()
                 .contentType(ContentType.JSON) // api call needs to add contentype as a header, in documentation it says
-                .body(bookingObject()) // BaseTest classda olusturdugumuz json object i method ile cagirdik
+                .body(bookingObject("Erdem","Buke",100)) // BaseTest classda olusturdugumuz json object i method ile cagirdik
                 .post("https://restful-booker.herokuapp.com/booking");
 
         response.prettyPrint(); // seeing response as output in console
