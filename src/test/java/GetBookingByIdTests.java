@@ -29,8 +29,8 @@ public class GetBookingByIdTests {
         boolean deposit = response.jsonPath().getJsonObject("depositpaid"); // deposit
 
         // JUnit Assertions.
-        Assertions.assertEquals("Josh", firstname);
-        Assertions.assertEquals("Allen", lastname);
+        Assertions.assertEquals("John", firstname);
+        Assertions.assertEquals("Smith", lastname);
         Assertions.assertEquals(111, totalPrice);
         Assertions.assertTrue(deposit);
 

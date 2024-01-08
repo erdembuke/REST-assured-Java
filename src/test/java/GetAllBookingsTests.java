@@ -8,7 +8,7 @@ public class GetAllBookingsTests {
     // Check the Response
 
     @Test
-    public void getAllBookingsTest() {
+    public void getAllBookings() {
         given()
                 .when()
                 .get("https://restful-booker.herokuapp.com/booking") // URL
