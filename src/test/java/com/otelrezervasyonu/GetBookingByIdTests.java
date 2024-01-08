@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.*;
 
-public class GetBookingByIdTests {
+public class GetBookingByIdTests extends BaseTest{
     // Tests might fail by the time you execute because it is an public test api and datas changing every minutes-hours.
     // Just the values in the assertions might change but coding style will stay the same.
 
@@ -14,9 +14,13 @@ public class GetBookingByIdTests {
     public void getBookingById() {
         // create API call
         // check response, write assertions
+
+        Response newBooking = createBooking(); // olusturdugumuz booking i buraya cagirip olusturduk
+        int reservationID = newBooking.jsonPath().getJsonObject("bookingid"); // bookingid yi cagirdik
+
         Response response = given() // get e kadar response oldugu icin Response degiskenine atadik
                 .when()
-                .get("https://restful-booker.herokuapp.com/booking/824");
+                .get("https://restful-booker.herokuapp.com/booking/" + reservationID); // dinamik id yi ekledik
 
         response
                 .then()
@@ -31,9 +35,9 @@ public class GetBookingByIdTests {
         boolean deposit = response.jsonPath().getJsonObject("depositpaid"); // deposit
 
         // JUnit Assertions.
-        Assertions.assertEquals("John", firstname);
-        Assertions.assertEquals("Smith", lastname);
-        Assertions.assertEquals(111, totalPrice);
+        Assertions.assertEquals("Erdem", firstname);
+        Assertions.assertEquals("Buke", lastname);
+        Assertions.assertEquals(100, totalPrice);
         Assertions.assertTrue(deposit);
 
 
