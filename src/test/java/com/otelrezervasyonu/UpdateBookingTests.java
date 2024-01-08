@@ -31,7 +31,7 @@ public class UpdateBookingTests extends BaseTest {
 
     @Test
     public void updateBookingTest() {
-        // Creating token because api call needs it on header as a Cookie
+        // Creating token because api call needs it on the header as a Cookie
         String token = createToken();
 
         // create reservation
@@ -45,17 +45,17 @@ public class UpdateBookingTests extends BaseTest {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .header("Cookie", "token=" + token)
-                .body(bookingObject("Emrah","Guney",1993))
+                .body(bookingObject("Emrah","Guney",1993,false))
                 .when()
                 .put("https://restful-booker.herokuapp.com/booking/" + bookingID);
 
         response.prettyPrint();
 
-        // assert
+        // assertions
         Assertions.assertEquals("Emrah", response.jsonPath().getJsonObject("firstname"));
         Assertions.assertEquals("Guney", response.jsonPath().getJsonObject("lastname"));
         Assertions.assertEquals(1993, (Integer) response.jsonPath().getJsonObject("totalprice"));
-        Assertions.assertEquals(true, response.jsonPath().getJsonObject("depositpaid"));
+        Assertions.assertEquals(false, response.jsonPath().getJsonObject("depositpaid"));
 
     }
 

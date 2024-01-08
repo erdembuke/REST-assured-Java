@@ -10,12 +10,12 @@ public class BaseTest {
 
     // body kismi string kabul ettigi icin method donus tipi string olacak
     // rezervasyon degerlerinin dinamik olabilmesi icin, olusturulurken degistirilebilmesi icin parametreler verildi
-    protected String bookingObject(String firstname, String lastname, int totalPrice) {
+    protected String bookingObject(String firstname, String lastname, int totalPrice, boolean depositPaid) {
         JsonObject body = new JsonObject();
         body.add("firstname", firstname);
         body.add("lastname", lastname);
         body.add("totalprice", totalPrice);
-        body.add("depositpaid", true);
+        body.add("depositpaid", depositPaid);
 
         JsonObject bookingDates = new JsonObject(); // bookingdates kendi basina bir obje oldugu icin ayri obje olusturduk
         bookingDates.add("checkin", "2024-01-01");
@@ -32,7 +32,7 @@ public class BaseTest {
 
                 .when()
                 .contentType(ContentType.JSON) // api call needs to add contentype as a header, in documentation it says
-                .body(bookingObject("Erdem","Buke",100)) // BaseTest classda olusturdugumuz json object i method ile cagirdik
+                .body(bookingObject("Erdem","Buke",100,true)) // BaseTest classda olusturdugumuz json object i method ile cagirdik
                 .post("https://restful-booker.herokuapp.com/booking");
 
         response.prettyPrint(); // seeing response as output in console
