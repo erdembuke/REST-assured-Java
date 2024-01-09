@@ -3,10 +3,16 @@ package com.otelrezervasyonu;
 import io.cucumber.cienvironment.internal.com.eclipsesource.json.JsonObject;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 
 import static io.restassured.RestAssured.given;
 
 public class BaseTest {
+
+    protected int createBookingId() {
+        Response response = createBooking();
+        return response.jsonPath().getJsonObject("bookingid");
+    }
 
     protected Response createBooking() {
         Response response = given()
@@ -29,26 +35,26 @@ public class BaseTest {
     // body kismi string kabul ettigi icin method donus tipi string olacak
     // rezervasyon degerlerinin dinamik olabilmesi icin, olusturulurken degistirilebilmesi icin parametreler verildi
     protected String bookingObject(String firstname, String lastname, int totalPrice, boolean depositPaid) {
-        JsonObject body = new JsonObject();
-        body.add("firstname", firstname);
-        body.add("lastname", lastname);
-        body.add("totalprice", totalPrice);
-        body.add("depositpaid", depositPaid);
+        JSONObject body = new JSONObject();
+        body.put("firstname", firstname);
+        body.put("lastname", lastname);
+        body.put("totalprice", totalPrice);
+        body.put("depositpaid", depositPaid);
 
         JsonObject bookingDates = new JsonObject(); // bookingdates kendi basina bir obje oldugu icin ayri obje olusturduk
         bookingDates.add("checkin", "2024-01-01");
         bookingDates.add("checkout", "2024-02-02");
 
-        body.add("bookingdates", bookingDates); // objeyi value olarak body ye ekledik
-        body.add("additionalneeds", "Pet Room");
+        body.put("bookingdates", bookingDates); // objeyi value olarak body ye ekledik
+        body.put("additionalneeds", "Pet Room");
 
         return body.toString();
     }
 
     protected String createToken() {
-        JsonObject body = new JsonObject();
-        body.add("username", "admin");
-        body.add("password", "password123");
+        JSONObject body = new JSONObject();
+        body.put("username", "admin");
+        body.put("password", "password123");
 
         Response response = given()
                 .contentType(ContentType.JSON)

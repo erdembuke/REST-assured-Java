@@ -17,7 +17,7 @@ public class CreateBookingTests extends BaseTest{
         // write Assertions
 
         // API call , Response
-        Response response = createBooking();
+        Response response = createBooking(); // response objesine ihtiyacimiz var o yuzden response return eden method
 
         // Assertions
         Assertions.assertEquals("Erdem", response.jsonPath().getJsonObject("booking.firstname"));

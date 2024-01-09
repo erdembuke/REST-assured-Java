@@ -12,15 +12,10 @@ public class GetBookingByIdTests extends BaseTest{
 
     @Test
     public void getBookingById() {
-        // create API call
-        // check response, write assertions
-
-        Response newBooking = createBooking(); // olusturdugumuz booking i buraya cagirip olusturduk
-        int reservationID = newBooking.jsonPath().getJsonObject("bookingid"); // bookingid yi cagirdik
-
+        // make API call
         Response response = given() // get e kadar response oldugu icin Response degiskenine atadik
                 .when()
-                .get("https://restful-booker.herokuapp.com/booking/" + reservationID); // dinamik id yi ekledik
+                .get("https://restful-booker.herokuapp.com/booking/" + createBookingId()); // dinamik id yi ekledik
 
         response
                 .then()
