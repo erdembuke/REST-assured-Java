@@ -34,14 +34,14 @@ public class BaseTest {
 
     protected Response createBooking() {
         Response response = given(spec)
-
                 .when()
                 .contentType(ContentType.JSON) // api call needs to add contentype as a header, in documentation it says
                 .body(bookingObject("Erdem","Buke",100,true)) // BaseTest classda olusturdugumuz json object i method ile cagirdik
                 .post("/booking");
 
         // Status code assertion, (then part)
-        response.then()
+        response
+                .then()
                 .statusCode(200);
 
         return response;

@@ -21,9 +21,6 @@ public class GetBookingByIdTests extends BaseTest{
                 .then()
                 .statusCode(200);
 
-
-        response.prettyPrint(); // response details
-
         // Degiskenlere atamadan direkt response.jsonPath()getJsonObject(...) diye de daha sade yazabiliriz
         String firstname = response.jsonPath().getJsonObject("firstname"); // firstname yi aldik
         String lastname = response.jsonPath().getJsonObject("lastname"); // lastname yi aldik
