@@ -1,6 +1,5 @@
 package com.otelrezervasyonu;
 
-import io.cucumber.cienvironment.internal.com.eclipsesource.json.JsonObject;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -12,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Arrays;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 
 public class BaseTest {
 
@@ -57,9 +56,9 @@ public class BaseTest {
         body.put("totalprice", totalPrice);
         body.put("depositpaid", depositPaid);
 
-        JsonObject bookingDates = new JsonObject(); // bookingdates kendi basina bir obje oldugu icin ayri obje olusturduk
-        bookingDates.add("checkin", "2024-01-01");
-        bookingDates.add("checkout", "2024-02-02");
+        JSONObject bookingDates = new JSONObject(); // bookingdates kendi basina bir obje oldugu icin ayri obje olusturduk
+        bookingDates.put("checkin", "2024-01-01");
+        bookingDates.put("checkout", "2024-02-02");
 
         body.put("bookingdates", bookingDates); // objeyi value olarak body ye ekledik
         body.put("additionalneeds", "Pet Room");

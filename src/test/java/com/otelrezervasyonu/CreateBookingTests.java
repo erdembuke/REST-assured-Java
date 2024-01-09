@@ -9,11 +9,8 @@ public class CreateBookingTests extends BaseTest{
 
     @Test
     public void createBookingTest() {
-        // create body (created with inheritence)
-        // make the API call
-        // write Assertions
+        // cagiriyi gerceklestir
 
-        // API call , Response
         Response response = createBooking(); // response objesine ihtiyacimiz var o yuzden response return eden method
 
         // Assertions
