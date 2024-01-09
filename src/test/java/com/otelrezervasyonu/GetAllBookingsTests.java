@@ -4,18 +4,17 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.*;
 
-public class GetAllBookingsTests {
+public class GetAllBookingsTests extends BaseTest{
     // Create API Call
     // https://restful-booker.herokuapp.com/booking (GET)
     // Check the Response
 
     @Test
     public void getAllBookings() {
-        given()
+        given(spec)
                 .when()
-                .get("https://restful-booker.herokuapp.com/booking") // URL
+                .get("/booking") // URL
                 .then()
-                .log().all()
                 .statusCode(200);
     }
 

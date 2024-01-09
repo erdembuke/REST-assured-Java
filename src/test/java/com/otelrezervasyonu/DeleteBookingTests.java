@@ -12,11 +12,11 @@ public class DeleteBookingTests extends BaseTest{
     public void deleteBookingTest() {
         // token ve rezervasyon olusturmayi BaseTest class icindeki methodlar ile yapabiliyoruz. response icinde
         // bu methodlari kullanarak testimizi gerceklestirebilecegiz
-        Response response = given()
+        Response response = given(spec)
                 .contentType(ContentType.JSON)
                 .header("Cookie","token=" + createToken())
                 .when()
-                .delete("https://restful-booker.herokuapp.com/booking/" + createBookingId());
+                .delete("/booking/" + createBookingId());
 
 
         // assertion

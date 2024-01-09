@@ -1,12 +1,9 @@
 package com.otelrezervasyonu;
 
-import io.cucumber.cienvironment.internal.com.eclipsesource.json.JsonObject;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static io.restassured.RestAssured.*;
 
 public class CreateBookingTests extends BaseTest{
 

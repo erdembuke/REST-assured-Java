@@ -1,13 +1,31 @@
 package com.otelrezervasyonu;
 
 import io.cucumber.cienvironment.internal.com.eclipsesource.json.JsonObject;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
+
+import java.util.Arrays;
 
 import static io.restassured.RestAssured.given;
 
 public class BaseTest {
+
+    // tum test kosumlari oncesi bir kez kosulacak
+    RequestSpecification spec; // kullanacagimiz icin sinif duzeninde tanimladik
+    @BeforeEach
+    public void setup() {
+        spec = new RequestSpecBuilder()
+                .setBaseUri("https://restful-booker.herokuapp.com")
+                // cagrilarin loglanmasi icin kutuphanedeki method
+                .addFilters(Arrays.asList(new RequestLoggingFilter(), new ResponseLoggingFilter()))
+                .build();
+    }
 
     protected int createBookingId() {
         Response response = createBooking();
@@ -15,14 +33,12 @@ public class BaseTest {
     }
 
     protected Response createBooking() {
-        Response response = given()
+        Response response = given(spec)
 
                 .when()
                 .contentType(ContentType.JSON) // api call needs to add contentype as a header, in documentation it says
                 .body(bookingObject("Erdem","Buke",100,true)) // BaseTest classda olusturdugumuz json object i method ile cagirdik
-                .post("https://restful-booker.herokuapp.com/booking");
-
-        response.prettyPrint(); // seeing response as output in console
+                .post("/booking");
 
         // Status code assertion, (then part)
         response.then()
@@ -56,13 +72,12 @@ public class BaseTest {
         body.put("username", "admin");
         body.put("password", "password123");
 
-        Response response = given()
+        Response response = given(spec)
                 .contentType(ContentType.JSON)
 
                 .when()
                 .body(body.toString()) // json object i ekledik
-                .log().all()
-                .post("https://restful-booker.herokuapp.com/auth");
+                .post("/auth");
 
         response.prettyPrint();
 

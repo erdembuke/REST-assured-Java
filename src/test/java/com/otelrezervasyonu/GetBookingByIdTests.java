@@ -13,9 +13,9 @@ public class GetBookingByIdTests extends BaseTest{
     @Test
     public void getBookingById() {
         // make API call
-        Response response = given() // get e kadar response oldugu icin Response degiskenine atadik
+        Response response = given(spec) // get e kadar response oldugu icin Response degiskenine atadik
                 .when()
-                .get("https://restful-booker.herokuapp.com/booking/" + createBookingId()); // dinamik id yi ekledik
+                .get("/booking/" + createBookingId()); // dinamik id yi ekledik
 
         response
                 .then()
