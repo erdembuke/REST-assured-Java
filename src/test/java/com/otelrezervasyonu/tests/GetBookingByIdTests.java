@@ -1,4 +1,4 @@
-package com.otelrezervasyonu;
+package com.otelrezervasyonu.tests;
 
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;

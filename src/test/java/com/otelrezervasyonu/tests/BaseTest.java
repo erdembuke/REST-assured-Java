@@ -1,4 +1,4 @@
-package com.otelrezervasyonu;
+package com.otelrezervasyonu.tests;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
