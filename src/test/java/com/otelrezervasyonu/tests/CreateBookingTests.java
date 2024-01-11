@@ -2,6 +2,7 @@ package com.otelrezervasyonu.tests;
 
 import com.otelrezervasyonu.models.Booking;
 import com.otelrezervasyonu.models.BookingDates;
+import com.otelrezervasyonu.models.BookingResponse;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
@@ -29,7 +30,7 @@ public class CreateBookingTests extends BaseTest{
 
     @Test
     public void createBookingWithPojo() {
-        // Serilization: Nesnenin durumunun saklanmasi ve daha sonra ayni durumun tekrar kullanilmasi
+        // Serialization: Nesnenin durumunun saklanmasi ve daha sonra ayni durumun tekrar kullanilmasi
         // BookingDates POJO
         BookingDates bookingDates = new BookingDates("2024-01-01","2024-02-02");
         // Booking POJO
@@ -42,17 +43,24 @@ public class CreateBookingTests extends BaseTest{
                 .when()
                 .post("/booking");
 
-        // Assertions
+        // De-Serialization. Gelen Response'u BookingResponse class icine yaziyoruz
+        BookingResponse bookingResponse = response.as(BookingResponse.class);
+        System.out.println(bookingResponse + " Booking Response Kaydedildi");
+        // ciktinin okunakli olmasi icin classlara toString() method eklendi
+
+        // Assertion
         response
                 .then()
                 .statusCode(200);
-        Assertions.assertEquals("Erdem", response.jsonPath().getJsonObject("booking.firstname"));
-        Assertions.assertEquals("Buke", response.jsonPath().getJsonObject("booking.lastname"));
-        Assertions.assertEquals(250, (Integer) response.jsonPath().getJsonObject("booking.totalprice"));
-        Assertions.assertEquals(false, response.jsonPath().getJsonObject("booking.depositpaid"));
-        Assertions.assertEquals("Pet Area", response.jsonPath().getJsonObject("booking.additionalneeds"));
 
-
+        // De-Serialization ile Assertion yazimi
+        Assertions.assertEquals("Erdem", bookingResponse.getBooking().getFirstname());
+        Assertions.assertEquals("Buke", bookingResponse.getBooking().getLastname());
+        Assertions.assertEquals(250, bookingResponse.getBooking().getTotalprice());
+        Assertions.assertEquals(false, bookingResponse.getBooking().getDepositpaid());
+        Assertions.assertEquals("2024-01-01", bookingResponse.getBooking().getBookingdates().getCheckin());
+        Assertions.assertEquals("2024-02-02", bookingResponse.getBooking().getBookingdates().getCheckout());
+        Assertions.assertEquals("Pet Area", bookingResponse.getBooking().getAdditionalneeds());
 
 
 

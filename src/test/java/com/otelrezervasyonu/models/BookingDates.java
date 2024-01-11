@@ -10,6 +10,11 @@ public class BookingDates {
         this.checkout = checkout;
     }
 
+    // De-Serialization icin default constructor
+    public BookingDates() {
+
+    }
+
     // Getters - Setters
     public String getCheckin() {
         return checkin;
@@ -24,5 +29,13 @@ public class BookingDates {
 
     public void setCheckout(String checkout) {
         this.checkout = checkout;
+    }
+
+    @Override
+    public String toString() {
+        return "BookingDates{" +
+                "checkin='" + checkin + '\'' +
+                ", checkout='" + checkout + '\'' +
+                '}';
     }
 }
